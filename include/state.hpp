@@ -37,6 +37,8 @@ namespace cleaner{
       bool getBase() const;
       size getBattery() const;
       size getPose() const;
+      int nbDirtyCells() const;
+      int nearestDirtyCell(int, int) const;
 
       /*!
       * \fn std::ostream& operator<<(std::ostream&, const state&)

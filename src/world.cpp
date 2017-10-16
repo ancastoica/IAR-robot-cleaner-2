@@ -118,21 +118,6 @@ namespace cleaner{
     return -1;
   }
 
-  std::vector<std::int> features(state* const s) const{
-    //Method for calculating features vector for a state s
-
-    std::vector<int> f;
-
-    //battery status
-    f.push_back(s->getBattery());
-
-    //number of dirty cells
-    f.push_back(s->nbDirtyCells());
-
-    //distance from robot to base
-    f.push_back(s->getPose() - 0); //homebase at index 0
-  }
-
   bool world::compare(std::vector<bool>const& v1, std::vector<bool>const& v2) const{
     return this->compare(v1, v2, -1);
   }
@@ -278,6 +263,21 @@ namespace cleaner{
 
   std::vector<state*>const& world::getStates() const{
     return this->states;
+  }
+
+  std::vector<std::int> features(state* const s) const{
+    //Method for calculating features vector for a state s
+
+    std::vector<int> f;
+
+    //battery status
+    f.push_back(s->getBattery());
+
+    //number of dirty cells
+    f.push_back(s->nbDirtyCells());
+
+    //distance from robot to base
+    f.push_back(s->getPose() - 0); //homebase at index 0
   }
 
 }
