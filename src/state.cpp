@@ -42,5 +42,11 @@ namespace cleaner{
         index += 1;
       }
     }
+
+
+
+    for (int i = 0; i < rows; ++i)
+      delete [] matrix[i];
+    delete [] matrix;
   }
 }
