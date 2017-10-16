@@ -265,7 +265,7 @@ namespace cleaner{
     return this->states;
   }
 
-  std::vector<std::int> features(state* const s) const{
+  std::vector<int> features(state* const s){
     //Method for calculating features vector for a state s
 
     std::vector<int> f;

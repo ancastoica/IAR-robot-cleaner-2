@@ -84,7 +84,7 @@ namespace cleaner{
       // returns the tuple next state and reward given current state and action
       void execute(int, action, int&, double&);
 
-      std::vector<std::int> features(state* const) const;
+      std::vector<int> features(state* const) const;
 
       /*!
       * \fn std::ostream& operator<<(std::ostream&, const world&)
