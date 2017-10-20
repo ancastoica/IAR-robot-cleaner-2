@@ -5,12 +5,11 @@ namespace cleaner{
     montecarlo::montecarlo(world const& w, double epsilon, double gamma, int episodes) : w(w), epsilon(epsilon), gamma(gamma), episodes(episodes){
     }
 
-    montecarlo::~montecarlo(){
-    }
+    montecarlo::~montecarlo() = default;
 
-    void montecarlo::plots(){
-      std::cout << this->getValueAt(0) << std::endl;
-  }
+	void montecarlo::plots(){
+		//
+    }
 
     void montecarlo::solve(){
       this->init();
@@ -74,7 +73,7 @@ namespace cleaner{
 
         w.execute(s, a, ss, r);
 
-        this->episode.push_back(std::make_tuple(s, a, r));
+        this->episode.emplace_back(std::make_tuple(s, a, r));
 
         if(this->pf[s][a] == -1){
           this->pf[s][a] = i;

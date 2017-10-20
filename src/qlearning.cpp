@@ -5,11 +5,10 @@ namespace cleaner{
     qlearning::qlearning(world const& w, double epsilon, double learning_rate, double gamma, int episodes) : w(w), epsilon(epsilon), learning_rate(learning_rate), gamma(gamma), episodes(episodes){
     }
 
-    qlearning::~qlearning(){
-    }
+    qlearning::~qlearning() = default;
 
     void qlearning::plots(){
-      std::cout << this->getValueAt(0) << std::endl;
+      //
   }
 
     void qlearning::solve(){
