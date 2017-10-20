@@ -39,6 +39,7 @@ namespace cleaner{
       size getPose() const;
       int nbDirtyCells() const;
       int nearestDirtyCell(int, int) const;
+      double getDistance(int, int, int, int) const;
 
       /*!
       * \fn std::ostream& operator<<(std::ostream&, const state&)

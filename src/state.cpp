@@ -1,52 +1,58 @@
+#include <cmath>
 #include "../include/state.hpp"
 
-namespace cleaner{
-  state::state(std::vector<bool>const grid, bool base, size battery, size pose): grid(grid), base(base), battery(battery), pose(pose){}
+namespace cleaner {
+	state::state(std::vector<bool> const grid, bool base, size battery, size pose) : grid(grid), base(base),
+																					 battery(battery), pose(pose) {}
 
-  state::~state(){}
+	state::~state() {}
 
-  std::vector<bool>const& state::getGrid() const{
-    return grid;
-  }
+	std::vector<bool> const &state::getGrid() const {
+		return grid;
+	}
 
-  bool state::getBase() const{
-    return base;
-  }
+	bool state::getBase() const {
+		return base;
+	}
 
-  size state::getBattery() const{
-    return battery;
-  }
+	size state::getBattery() const {
+		return battery;
+	}
 
-  size state::getPose() const{
-    return pose;
-  }
+	size state::getPose() const {
+		return pose;
+	}
 
-  int state::nbDirtyCells() const{
-    int n = 0;
-    for(int i=0; i<grid.size(); i++){
-      if(grid[i] == true){
-        n += 1;
-      }
-    }
-    return n;
-  }
+	int state::nbDirtyCells() const {
+		int n = 0;
+		for (int i = 0; i < grid.size(); i++) {
+			if (grid[i] == true) {
+				n += 1;
+			}
+		}
+		return n;
+	}
 
-  int state::nearestDirtyCell(int height, int width) const{
-    int rows = height, cols = width;
-    int index = 0;
-    bool** matrix = new bool*[rows];
-    for (int i = 0; i < rows; ++i){
-      matrix[i] = new bool[cols];
-      for (int j = 0; j < cols; ++j){
-        matrix[i][j] = grid[index];
-        index += 1;
-      }
-    }
+	// ToDo: Test
+	int state::nearestDirtyCell(int height, int width) const {
+		double minDist = height * width;
+		double tempDist = 0;
+		int indexMin = 0;
 
+		for (int i = 0; i < grid.size() - 1; ++i) {
+			if(grid[i] == 1) {
+				tempDist = getDistance(i % width, static_cast<int>(floor(i / height)), pose % width, static_cast<int>(floor(pose / height)));
+				if(tempDist < minDist){
+					minDist = tempDist;
+					indexMin = i;
+				}
+			}
+		}
+		return indexMin;
+	}
 
-
-    for (int i = 0; i < rows; ++i)
-      delete [] matrix[i];
-    delete [] matrix;
-  }
+	double state::getDistance(int cell_x, int cell_y, int robot_x, int robot_y) const{
+		return sqrt(pow(robot_x - cell_x, 2) + pow(robot_y - cell_y, 2));
+	}
 }
+
