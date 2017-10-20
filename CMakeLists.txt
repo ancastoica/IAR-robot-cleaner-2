@@ -1,6 +1,6 @@
 #Déclaration du projet
 
-project(homeword1_correction)
+project(IAR-robot-cleaner-2)
 
 
 
@@ -8,7 +8,7 @@ project(homeword1_correction)
 
 add_executable(
 
-        my_executable
+        Homework_2
 
         src/action.cpp
 
