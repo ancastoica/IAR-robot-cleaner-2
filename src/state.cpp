@@ -40,7 +40,7 @@ namespace cleaner {
 		double tempDist = 0;
 		int indexMin = -1;
 
-		for (int i = 0; i < grid.size(); i++) {
+		for (int i = 0; i < height * width; i++) {
 			if(grid[i] == 1) {
 				tempDist = getDistance(i % width, static_cast<int>(floor(i / height)), pose % width, static_cast<int>(floor(pose / height)));
 				if(tempDist < minDist){
