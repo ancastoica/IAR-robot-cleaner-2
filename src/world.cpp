@@ -265,7 +265,7 @@ namespace cleaner{
     return this->states;
   }
 
-  std::vector<int> features(state* const s){
+  std::vector<int> world::features(state* const s){
     //Method for calculating features vector for a state s
 
     std::vector<int> f;
@@ -273,11 +273,16 @@ namespace cleaner{
     //battery status
     f.push_back(s->getBattery());
 
+    //distance from robot to base
+    f.push_back(s->getPose() - 0); //homebase at index 0
+
     //number of dirty cells
     f.push_back(s->nbDirtyCells());
 
-    //distance from robot to base
-    f.push_back(s->getPose() - 0); //homebase at index 0
+    //Distance to nearest dirty cell
+    f.push_back(s->nearestDirtyCell(height, width));
+
+    return f;
   }
 
 }
