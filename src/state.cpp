@@ -1,4 +1,5 @@
 #include <cmath>
+#include <iostream>
 #include "../include/state.hpp"
 
 namespace cleaner {
@@ -37,9 +38,9 @@ namespace cleaner {
 	int state::nearestDirtyCell(int height, int width) const {
 		double minDist = height * width;
 		double tempDist = 0;
-		int indexMin = 0;
+		int indexMin = -1;
 
-		for (int i = 0; i < grid.size() - 1; ++i) {
+		for (int i = 0; i < grid.size(); i++) {
 			if(grid[i] == 1) {
 				tempDist = getDistance(i % width, static_cast<int>(floor(i / height)), pose % width, static_cast<int>(floor(pose / height)));
 				if(tempDist < minDist){

@@ -24,10 +24,11 @@ namespace cleaner{
     world w;
     int episode = 0, episodes;
     double MIN = -100000, MAX = 100000;
-    double gamma, epsilon, learning_rate;
+    double gamma, epsilon, learning_rate, theta;
     std::unordered_map<int, std::unordered_map<int, double>> qf;
 
     void backup(int /*current state*/, int /*action*/, int /*next state*/, double /*reward*/);
+    void eval(int /*current state*/, int /*action*/, int /*next state*/, double /*reward*/);
     void plots();
     void init();
 
