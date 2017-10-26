@@ -2,7 +2,7 @@
 
 
 namespace cleaner{
-    montecarlo::montecarlo(world const& w, double epsilon, double gamma, int episodes) : w(w), epsilon(epsilon), gamma(gamma), episodes(episodes){
+    montecarlo::montecarlo(world const& w, double epsilon, double gamma, double learning_rate,  int episodes) : w(w), epsilon(epsilon), gamma(gamma), learning_rate(learning_rate), episodes(episodes){
     }
 
     montecarlo::~montecarlo() = default;
@@ -95,6 +95,13 @@ namespace cleaner{
             this->jf[s][a].second ++;
             this->jf[s][a].first += cumul;
             this->qf[s][a] = this->jf[s][a].first / this->jf[s][a].second;
+              for (int tindex = 0; tindex < w.featuresnb; tindex++) {
+                  for (int findex = 0; findex < w.featuresnb; findex++) {
+                      double sfeature = w.features(w.getState(s))[findex + a];
+                      this->theta[tindex + a] = this->theta[tindex + a] + this->learning_rate * (cumul - sfeature * this->theta[tindex + a]) * sfeature;
+                      featureBackup(s, a);
+                  }
+              }
           }
         }
       }
@@ -111,6 +118,23 @@ namespace cleaner{
           this->jf.at(s).emplace(a, std::pair<double, int>(0.0, 0));
         }
       }
+        for (int feat = 0; feat < w.featuresnb * action::END ; feat++) {
+            this->theta.emplace(feat, 0.0);
+        }
+    }
+
+    void montecarlo::featureBackup(int s, int a) {
+        for (int feat = 0; feat < w.featuresnb; feat++) {
+            this->feat_qf[s][a] = this->feat_qf[s][a] + w.features(w.getState(s))[feat + a] * this->theta[feat + a];
+        }
+    }
+
+    void montecarlo::printTheta() {
+        for (int index = 0; index < this->theta.size(); index++) {
+            for(int a = 0; a < action::END; a++) {
+                std::cout << this->theta[index + a] << std::endl;
+            }
+        }
     }
 
 }

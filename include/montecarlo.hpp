@@ -22,10 +22,14 @@ namespace cleaner{
   class montecarlo{
   protected:
     world w;
-    double gamma, epsilon;
+    double gamma, epsilon, learning_rate;
     int cepisode = 0, episodes;
     double MIN = -100000, MAX = 100000;
     std::vector<std::tuple<int, int, int>> episode;
+      std::unordered_map<int, std::unordered_map<int, double>> qf;
+      std::unordered_map<int, std::unordered_map<int, double>> feat_qf;
+      std::unordered_map<int, double> theta;
+      std::unordered_map<int, double> features;
 
     // backup the position of a pair of state and action in the current episode
     std::unordered_map<int, std::unordered_map<int, int>> pf;
@@ -39,14 +43,16 @@ namespace cleaner{
     double getReturn(int i);
     void setEpisode();
     void backup();
+      void featureBackup(int /*current state*/, int /*action*/);
     void plots();
     void init();
 
   public:
     ~montecarlo();
-    montecarlo(world const&, double, double, int);
+    montecarlo(world const&, double, double, double, int);
     void solve();
     action greedy(int);
     double getValueAt(int);
+      void printTheta();
   };
 }
