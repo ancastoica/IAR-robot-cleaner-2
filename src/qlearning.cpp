@@ -67,7 +67,7 @@ namespace cleaner {
 
 	void qlearning::featureBackup(int s, int a) {
 		for (int feat = 0; feat < w.featuresnb; feat++) {
-			this->feat_qf[s][a] = this->feat_qf[s][a] + w.features(w.getState(s))[feat + a] * this->theta[feat + a];
+			this->feat_qf[s][a] = this->feat_qf[s][a] + w.features(w.getState(s))[feat * action::END + a] * this->theta[feat * action::END + a];
 		}
 	}
 
@@ -77,7 +77,7 @@ namespace cleaner {
 			for (int findex = 0; findex < w.featuresnb; findex++) {
 				double ssfeature = w.features(w.getState(ss))[findex + a];
 				double sfeature = w.features(w.getState(s))[findex + a];
-				this->theta[tindex + a] = this->theta[tindex + a] + this->learning_rate * (r + this->gamma * ssfeature * this->theta[tindex + a] - sfeature * this->theta[tindex + a]) * sfeature;
+				this->theta[tindex * action::END + a] = this->theta[tindex * action::END + a] + this->learning_rate * (r + this->gamma * ssfeature * this->theta[tindex * action::END + a] - sfeature * this->theta[tindex * action::END + a]) * sfeature;
 				featureBackup(s, a);
 			}
 		}

@@ -85,12 +85,11 @@ namespace cleaner{
 
     void montecarlo::backup(){
       int s, a;
-      double old, cumul;
+      double cumul;
 
       for(s=0; s<this->w.getNumStates(); ++s){
         for(a=0; a<action::END; ++a){
           if( this->pf[s][a] > -1 ){
-            old = this->qf[s][a];
             cumul = this->getReturn(this->pf[s][a]);
             this->jf[s][a].second ++;
             this->jf[s][a].first += cumul;
@@ -98,7 +97,7 @@ namespace cleaner{
               for (int tindex = 0; tindex < w.featuresnb; tindex++) {
                   for (int findex = 0; findex < w.featuresnb; findex++) {
                       double sfeature = w.features(w.getState(s))[findex + a];
-                      this->theta[tindex + a] = this->theta[tindex + a] + this->learning_rate * (cumul - sfeature * this->theta[tindex + a]) * sfeature;
+                      this->theta[tindex * action::END  + a] = this->theta[tindex * action::END + a] + this->learning_rate * (cumul - sfeature * this->theta[tindex * action::END + a]) * sfeature;
                       featureBackup(s, a);
                   }
               }
@@ -125,15 +124,13 @@ namespace cleaner{
 
     void montecarlo::featureBackup(int s, int a) {
         for (int feat = 0; feat < w.featuresnb; feat++) {
-            this->feat_qf[s][a] = this->feat_qf[s][a] + w.features(w.getState(s))[feat + a] * this->theta[feat + a];
+            this->feat_qf[s][a] = this->feat_qf[s][a] + w.features(w.getState(s))[feat * action::END + a] * this->theta[feat * action::END + a];
         }
     }
 
     void montecarlo::printTheta() {
         for (int index = 0; index < this->theta.size(); index++) {
-            for(int a = 0; a < action::END; a++) {
-                std::cout << this->theta[index + a] << std::endl;
-            }
+            std::cout << this->theta[index] << std::endl;
         }
     }
 
