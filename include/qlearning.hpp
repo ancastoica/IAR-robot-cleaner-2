@@ -18,25 +18,42 @@
 //! \namespace  cleaner
 //!
 //! Namespace grouping all tools required for the robot cleaner project.
-namespace cleaner{
-  class qlearning{
-  protected:
-    world w;
-    int episode = 0, episodes;
-    double MIN = -100000, MAX = 100000;
-    double gamma, epsilon, learning_rate, theta;
-    std::unordered_map<int, std::unordered_map<int, double>> qf;
+namespace cleaner {
+	class qlearning {
+	protected:
+		world w;
+		int episode = 0, episodes;
+		double MIN = -100000, MAX = 100000;
+		double gamma, epsilon, learning_rate;
+		std::unordered_map<int, std::unordered_map<int, double>> qf;
+		std::unordered_map<int, std::unordered_map<int, double>> feat_qf;
+		std::unordered_map<int, double> theta;
+		std::unordered_map<int, double> features;
 
-    void backup(int /*current state*/, int /*action*/, int /*next state*/, double /*reward*/);
-    void eval(int /*current state*/, int /*action*/, int /*next state*/, double /*reward*/);
-    void plots();
-    void init();
+		void backup(int /*current state*/, int /*action*/, int /*next state*/, double /*reward*/);
 
-  public:
-    ~qlearning();
-    qlearning(world const&, double, double, double, int);
-    void solve();
-    int greedy(int);
-    double getValueAt(int);
-  };
+		void featureBackup(int /*current state*/, int /*action*/);
+
+		void eval(int /*current state*/, int /*action*/, int /*next state*/, double /*reward*/);
+
+		double getValueFunc(int /*state to evaluate*/);
+
+		void plots();
+
+		void init();
+
+	public:
+		~qlearning();
+
+		qlearning(world const &, double, double, double, int);
+
+		void solve();
+
+		int greedy(int);
+
+		double getValueAt(int);
+
+		// Prints the values of theta
+		void printTheta();
+	};
 }
