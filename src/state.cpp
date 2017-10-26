@@ -34,7 +34,6 @@ namespace cleaner {
 		return n;
 	}
 
-	// ToDo: Test
 	int state::nearestDirtyCell(int height, int width) const {
 		double minDist = height * width;
 		double tempDist = 0;
