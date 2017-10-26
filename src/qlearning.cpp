@@ -107,9 +107,8 @@ namespace cleaner {
 
 	void qlearning::printTheta() {
 		for (int index = 0; index < this->theta.size(); index++) {
-			for(int a = 0; a < action::END; a++) {
-				std::cout << this->theta[index + a] << std::endl;
-			}
+            std::cout << this->theta[index] << " ";
 		}
+        std::cout << std::endl;
 	}
 }

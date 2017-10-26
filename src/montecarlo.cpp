@@ -96,7 +96,7 @@ namespace cleaner{
             this->qf[s][a] = this->jf[s][a].first / this->jf[s][a].second;
               for (int tindex = 0; tindex < w.featuresnb; tindex++) {
                   for (int findex = 0; findex < w.featuresnb; findex++) {
-                      double sfeature = w.features(w.getState(s))[findex + a];
+                      double sfeature = w.features(w.getState(s))[findex * action::END + a];
                       this->theta[tindex * action::END  + a] = this->theta[tindex * action::END + a] + this->learning_rate * (cumul - sfeature * this->theta[tindex * action::END + a]) * sfeature;
                       featureBackup(s, a);
                   }
@@ -130,8 +130,9 @@ namespace cleaner{
 
     void montecarlo::printTheta() {
         for (int index = 0; index < this->theta.size(); index++) {
-            std::cout << this->theta[index] << std::endl;
+            std::cout << this->theta[index] << " ";
         }
+        std::cout << std::endl;
     }
 
 }
