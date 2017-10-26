@@ -26,7 +26,6 @@ namespace cleaner{
     int cepisode = 0, episodes;
     double MIN = -100000, MAX = 100000;
     std::vector<std::tuple<int, int, int>> episode;
-      std::unordered_map<int, std::unordered_map<int, double>> qf;
       std::unordered_map<int, std::unordered_map<int, double>> feat_qf;
       std::unordered_map<int, double> theta;
       std::unordered_map<int, double> features;
