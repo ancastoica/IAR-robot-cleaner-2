@@ -75,8 +75,8 @@ namespace cleaner {
 
 		for (int tindex = 0; tindex < w.featuresnb; tindex++) {
 			for (int findex = 0; findex < w.featuresnb; findex++) {
-				double ssfeature = w.features(w.getState(ss))[findex + a];
-				double sfeature = w.features(w.getState(s))[findex + a];
+				double ssfeature = w.features(w.getState(ss))[findex * action::END + a];
+				double sfeature = w.features(w.getState(s))[findex * action::END + a];
 				this->theta[tindex * action::END + a] = this->theta[tindex * action::END + a] + this->learning_rate * (r + this->gamma * ssfeature * this->theta[tindex * action::END + a] - sfeature * this->theta[tindex * action::END + a]) * sfeature;
 				featureBackup(s, a);
 			}
