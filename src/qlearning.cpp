@@ -25,7 +25,6 @@ namespace cleaner {
 			for (int i = 0; i < 100; i++) {
 				a = greedy(s);
 				w.execute(s, static_cast<action>(a), ss, r);
-				// this->backup(s, a, ss, r);
 				this->eval(s, a, ss, r);
 				s = ss;
 			}
@@ -37,6 +36,14 @@ namespace cleaner {
 		double value = MIN;
 		for (int a = 0; a < action::END; ++a) {
 			value = std::max(value, this->qf[s][a]);
+		}
+		return value;
+	}
+
+	double qlearning::getFeatValueAt(int s) {
+		double value = MIN;
+		for (int a = 0; a < action::END; ++a) {
+			value = std::max(value, this->feat_qf[s][a]);
 		}
 		return value;
 	}
@@ -78,17 +85,9 @@ namespace cleaner {
 				double ssfeature = w.features(w.getState(ss))[findex * action::END + a];
 				double sfeature = w.features(w.getState(s))[findex * action::END + a];
 				this->theta[tindex * action::END + a] = this->theta[tindex * action::END + a] + this->learning_rate * (r + this->gamma * ssfeature * this->theta[tindex * action::END + a] - sfeature * this->theta[tindex * action::END + a]) * sfeature;
-				featureBackup(s, a);
+				this->featureBackup(s, a);
 			}
 		}
-	}
-
-	double qlearning::getValueFunc(int s) {
-		double max = this->qf[s][0];
-		for (int a = 1; a < action::END; ++a) {
-			max = std::max(max, this->qf[s][a]);
-		}
-		return max;
 	}
 
 	void qlearning::init() {

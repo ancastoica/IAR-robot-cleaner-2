@@ -28,15 +28,12 @@ namespace cleaner {
 		std::unordered_map<int, std::unordered_map<int, double>> qf;
 		std::unordered_map<int, std::unordered_map<int, double>> feat_qf;
 		std::unordered_map<int, double> theta;
-		std::unordered_map<int, double> features;
 
 		void backup(int /*current state*/, int /*action*/, int /*next state*/, double /*reward*/);
 
 		void featureBackup(int /*current state*/, int /*action*/);
 
 		void eval(int /*current state*/, int /*action*/, int /*next state*/, double /*reward*/);
-
-		double getValueFunc(int /*state to evaluate*/);
 
 		void plots();
 
@@ -52,6 +49,8 @@ namespace cleaner {
 		int greedy(int);
 
 		double getValueAt(int);
+
+		double getFeatValueAt(int);
 
 		// Prints the values of theta
 		void printTheta();

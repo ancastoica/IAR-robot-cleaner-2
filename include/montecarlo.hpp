@@ -52,6 +52,7 @@ namespace cleaner{
     void solve();
     action greedy(int);
     double getValueAt(int);
+    double getFeatValueAt(int);
       void printTheta();
   };
 }
